@@ -38,6 +38,13 @@ const SignupForms: React.FC<SignupFormsProps> = ({ selectedType }) => {
     }
   };
   
+  const handleActivationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    if (!isNaN(value) && value >= 1) {
+      setActivationCount(value);
+    }
+  };
+  
   const handleSubmit = (event: React.FormEvent, type: string) => {
     event.preventDefault();
     toast({
@@ -178,33 +185,17 @@ const SignupForms: React.FC<SignupFormsProps> = ({ selectedType }) => {
                   
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center justify-between">
-                      <Label>Activations</Label>
+                      <Label htmlFor="activations">Activations</Label>
                       <div className="text-xl font-semibold">{activationCount}</div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setActivationCount(Math.max(100, activationCount - 50))}
-                      >
-                        -
-                      </Button>
-                      <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-blue-600 rounded-full" 
-                          style={{ width: `${Math.min((activationCount/500) * 100, 100)}%` }}
-                        />
-                      </div>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setActivationCount(activationCount + 50)}
-                      >
-                        +
-                      </Button>
-                    </div>
+                    <Input
+                      id="activations"
+                      type="number"
+                      min="1"
+                      value={activationCount}
+                      onChange={handleActivationChange}
+                      className="w-full"
+                    />
                     <div className="text-right text-sm text-gray-500">
                       ${(activationCount * 0.49).toFixed(2)}/month
                     </div>

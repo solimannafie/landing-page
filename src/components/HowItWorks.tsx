@@ -7,6 +7,16 @@ interface HowItWorksProps {
 }
 
 const HowItWorks: React.FC<HowItWorksProps> = ({ onUserTypeSelect }) => {
+  const handleUserTypeSelect = (type: 'activator' | 'brand') => {
+    onUserTypeSelect(type);
+    
+    // Smooth scroll to the respective form
+    const element = document.getElementById(`join-${type}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="how-it-works" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -18,16 +28,16 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ onUserTypeSelect }) => {
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4 mb-16">
             <button 
-              onClick={() => onUserTypeSelect('brand')}
-              className="bg-blue-700 hover:bg-blue-800 text-white font-medium px-8 py-3 rounded-lg transition-colors"
-            >
-              I'm a Brand
-            </button>
-            <button 
-              onClick={() => onUserTypeSelect('activator')}
+              onClick={() => handleUserTypeSelect('activator')}
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-8 py-3 rounded-lg transition-colors"
             >
               I'm an Activator
+            </button>
+            <button 
+              onClick={() => handleUserTypeSelect('brand')}
+              className="bg-blue-700 hover:bg-blue-800 text-white font-medium px-8 py-3 rounded-lg transition-colors"
+            >
+              I'm a Brand
             </button>
           </div>
         </div>
